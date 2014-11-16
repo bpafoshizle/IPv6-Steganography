@@ -1,0 +1,84 @@
+# Interval in seconds to send the message out on
+interval=5
+
+# File that contains the message to be be embedded into
+# the source address fields. 
+msgfile=/etc/m2aMessage
+
+# Interface to capture on
+interface=eth3
+
+# If 0, then direct mode will be used in which packets are 
+# created and sent out by the program. If macencode mode is
+# used then the mac address will actually be changed to contain
+# the message so it will go out on all packets leaving the host
+# over an IPv6 network.  
+macencode=0
+
+# Only applicable to macencode mode. If the fast option is selected,
+# then the message will go out in possibly less unique mac addresses 
+# because it will be encoded into all 6 bytes unstead of the lower 5. 
+# However the drawback to this approach is that the lsb of the highest 
+# nibble of the mac must be set to 0, because a 1 is used for multicast.
+# Because of this, the decoding process requires the user to select from 
+# several possibilities which message is the correct one because all
+# possibilities will be decoded. The reason for this is that there is no
+# possible way for the program to know whether this bit was actually 
+# changed to a zero before being sent leaving several possibilities on
+# what it could be.  
+#txfast=0
+
+# Either 'msg', 'inject', 'testFormat', or 'decode'
+mode=decode
+
+# destination address to send the message to
+dstAddr=fe80::21a:70ff:fe14:8ac0
+
+# Destination port to use
+dstPort=4444
+
+# Source port to use. If not specified
+# then the OS will choose a random port
+# srcPort
+
+# Transport layer protocol to use. 
+# Either 'tcp' or 'udp'
+transport=tcp
+dstMAC=10:10:10:10:10:10
+
+# Scope to use for the prefix of the 
+# IPv6 packet
+scope=link
+
+# File to use for the data portion of the packets
+dataFile=/etc/m2aData
+
+# 0 if message is not to be encrypted
+# 1 if it is (must supply key file if encryption
+# is to be used)
+encrypt=1
+
+# File containing the encryption key and initialization 
+# vector
+keyFile=/etc/m2aKey
+
+# Filter string used by the dump object to selectively grab
+# packets that fit the required criteria
+filterString=ether dst 10:10:10:10:10:10
+
+# Either 'live' or 'offline'
+capture=live
+
+# The name of the pcap file to be used if sniffing in 
+# offline mode.
+pcap=tcpMessageUnencrypted.pcap
+
+# Tells the decoder to decode based on a macEncode style
+# of encoding if set to 1. Otherwise, it does the straight
+# decode
+macdecode=0
+
+# Directs the program to continuously run and sniff the 
+# network if set to 1. Otherwise, the program quits after
+# the first message has been received.
+continuousDump=0
